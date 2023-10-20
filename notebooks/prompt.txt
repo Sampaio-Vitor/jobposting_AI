@@ -1,0 +1,62 @@
+Dada a descrição da vaga a seguir, forneça uma lista Python com os seguintes elementos:
+
+- O primeiro elemento é um número: 
+   1 para "Analista de Dados" (incluindo funções semelhantes como Analista de BI),
+   2 para "Cientista de Dados" (incluindo Engenheiro de Machine Learning e Engenheiro de MLOPS),
+   3 para "Engenheiro de Dados",
+   0 se for outro cargo ou não identificado.
+
+- O segundo elemento é um número: 
+   1 se a vaga for remota,
+   0 caso contrário.
+
+- O terceiro elemento é uma string contendo um resumo da vaga em três linhas, como se estivesse recomendando a vaga a um candidato.
+
+- O quarto elemento é uma string representando a senioridade da vaga: "Sênior", "Pleno" ou "Júnior", CASO NÃO ESTEJA EXPLICITO, VOCE DEVE JULGAR BASEADO NA DESCRIÇÃO.
+
+IMPORTANTE: A RESPOSTA DEVE SER apenas uma lista com esses quatro elementos, sem nenhum texto adicional.
+
+Descrição da vaga:
+"
+Sobre a vaga
+OLÁ, SOMOS A ZALLPY! 🚀
+Imagine uma empresa focada em reunir talentos para acelerar a transformação digital do mundo em que vivemos.
+Aqui você vai encontrar:
+Uma galera incrível e uma equipe unida;
+Energia positiva e o clima perfeito;
+Oportunidades de aprendizado todos os dias;
+Nossos dias são uma constante evolução.
+
+
+Buscamos:
+Profissionais dinâmicos, colaborativos, com foco em resultados e apaixonados por tecnologia e inovação que goste de desafios e que tenham o desejo de crescer conosco.
+
+
+RESPONSABILIDADES E ATRIBUIÇÕES
+
+• Pesquisar formas de melhorar modelos e algoritmos de Machine Learning;
+• Melhorar os pipelines de coleta de dados;
+• Desenvolver e treinar modelos de Machine Learning;
+• Desenvolver pipelines de inferência;
+• Implantar modelos de Machine Learning em produção;
+• Simular novos algoritmos rodando em produção;
+• Comparar modelos e algoritmos;
+• Trabalhar com modelos de Machine Learning que rodam no edge;
+• Desenvolver ferramentas de análise e visualização em Python;
+REQUISITOS E QUALIFICAÇÕES
+
+• Experiência anterior com Machine Learning e Análise de Dados;
+• Experiência anterior com Python para Análise de Dados e Desenvolvimento de Software;
+• Conhecimento de modelos modernos de Machine Learning (e.g. Convolutional Networks, Recurrent Networks, …);
+• Conhecimento em Pandas, Numpy e Jupyter;
+• Familiaridade com consultas SQL;
+• Experiência com ORTools;
+• Familiaridade com técnicas de processamento de sinais;
+• Familiaridade com os fundamentos de Probabilidade e Estatística;
+• Inglês intermediário/avançado.
+
+
+Vem ser Zallpy!
+"
+
+A RESPOSTA DEVE SER apenas uma lista com esses quatro elementos, sem nenhum texto adicional.

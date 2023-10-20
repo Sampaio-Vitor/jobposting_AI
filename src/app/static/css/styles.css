@@ -1,0 +1,54 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+.hero {
+    background-color: gray;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+}
+
+.logo {
+    height: 100px;
+}
+
+.toggle-switcher {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 40px;
+}
+
+input[type="radio"] {
+    display: none;
+}
+
+label {
+    padding: 10px 20px;
+    border: 1px solid gray;
+    cursor: pointer;
+}
+
+input[type="radio"]:checked + label {
+    background-color: lightgray;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 40px;
+}
+
+table, th, td {
+    border: 1px solid black;
+}
+
+th, td {
+    padding: 8px 12px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}

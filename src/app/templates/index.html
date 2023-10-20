@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Site</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="hero">
+        <img src="{{ url_for('static', filename='images/tech_sniffer.png') }}" alt="Meu Logo" class="logo">
+    </div>
+
+    <div class="toggle-switcher">
+        <button onclick="location.href='{{ url_for('index', cargo='1') }}'">Analista de Dados</button>
+        <button onclick="location.href='{{ url_for('index', cargo='2') }}'">Cientista de Dados</button>
+        <button onclick="location.href='{{ url_for('index', cargo='3') }}'">Engenheiro de Dados</button>
+    </div>
+    
+        </a>
+    </div>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>TITULO</th>
+                <th>DATA</th>
+                <th>EMPRESA</th>
+                <th>LOCAL</th>
+                <th>Cargo</th>
+                <th>Remoto</th>
+                <th>Resumo</th>
+                <th>Senioridade</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for job in jobs %}
+            <tr>
+                <td><a href="{{ job['LINK'] }}">{{ job['TITULO'] }}</a></td>
+                <td>{{ job['DATA'] }}</td>
+                <td>{{ job['EMPRESA'] }}</td>
+                <td>{{ job['LOCAL'] }}</td>
+                <td>{{ job['Cargo'] }}</td>
+                <td>
+                    {% if job['Remoto'] == 1 %}
+                        ✅
+                    {% else %}
+                        ❌
+                    {% endif %}
+                </td>
+                <td>{{ job['Resumo'] }}</td>
+                <td>{{ job['Senioridade'] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        
+    </table>
+</body>
+</html>
