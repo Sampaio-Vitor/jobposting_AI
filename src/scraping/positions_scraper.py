@@ -145,7 +145,7 @@ for element in job_elements:
     print(df.sample())
 
     # Salvar os dados em um arquivo CSV
-    df.to_csv("newly_fetched_data.csv", index=False)
+    df.to_csv("data/newly_fetched_data.csv", index=False)
 
 # Exibir uma amostra do DataFrame
 print(df.sample(5))
