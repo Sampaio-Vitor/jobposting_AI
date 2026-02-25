@@ -30,7 +30,14 @@ is_relevant must be FALSE for:
 - "Evaluation" or "assessment" roles disguised as ML Engineer/Data Scientist — if the PRIMARY task is writing evaluation suites, assessing AI-generated solutions, or creating benchmarks for AI models (not building the models themselves), mark as NOT relevant
 - Project-based or contract roles at staffing agencies (e.g. Keystone, Nexus, Appen, Scale AI, Outlier) where the work is evaluating/scoring model outputs
 
-is_international: TRUE only if the job explicitly says it accepts candidates from outside Brazil, or is listed as remote/worldwide/global/anywhere
+is_international: TRUE if a person living in Brazil could work this job remotely. This includes:
+- Jobs at companies headquartered outside Brazil that offer remote work
+- Jobs listed as remote/worldwide/global/anywhere
+- Jobs that pay in USD/EUR/GBP or mention international contractor setup
+- Jobs at foreign companies even if they say "Brazil" in location (they're hiring remotely IN Brazil)
+is_international must be FALSE only for:
+- Jobs restricted to a specific Brazilian city with in-office requirement
+- Jobs at Brazilian companies with no indication of international/remote setup
 
 Job posting:
 Title: {title}
