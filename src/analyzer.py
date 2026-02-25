@@ -1,11 +1,13 @@
+import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from google import genai
 from src import config
 from src.models import JobAnalysis
 from src.logger import log
 
-MODEL = "gemini-2.5-flash-lite"
+MODEL = "gemini-3-flash-preview"
 MAX_WORKERS = 10
+MAX_RETRIES = 3
 
 PROMPT_TEMPLATE = """You are a strict job classifier. Analyze this job posting.
 
@@ -28,8 +30,7 @@ is_relevant must be FALSE for:
 - "Evaluation" or "assessment" roles disguised as ML Engineer/Data Scientist — if the PRIMARY task is writing evaluation suites, assessing AI-generated solutions, or creating benchmarks for AI models (not building the models themselves), mark as NOT relevant
 - Project-based or contract roles at staffing agencies (e.g. Keystone, Nexus, Appen, Scale AI, Outlier) where the work is evaluating/scoring model outputs
 
-is_remote: TRUE only if explicitly stated as remote/home office/anywhere
-is_international: TRUE only if the job explicitly says it accepts candidates from outside Brazil, or is listed as "worldwide", "global", "anywhere"
+is_international: TRUE only if the job explicitly says it accepts candidates from outside Brazil, or is listed as remote/worldwide/global/anywhere
 
 Job posting:
 Title: {title}
@@ -50,27 +51,31 @@ def _get_client():
 
 
 def _analyze_one(job: dict) -> tuple[str, dict | None, str | None]:
-    """Analyze a single job. Returns (job_id, analysis_dict, error_msg)."""
-    try:
-        client = _get_client()
-        prompt = PROMPT_TEMPLATE.format(
-            title=job["title"],
-            company=job["company"],
-            location=job["location"],
-            description=job["description"][:3000],
-        )
-        response = client.models.generate_content(
-            model=MODEL,
-            contents=prompt,
-            config={
-                "response_mime_type": "application/json",
-                "response_schema": JobAnalysis,
-            },
-        )
-        result: JobAnalysis = response.parsed
-        return (job["id"], result.model_dump(), None)
-    except Exception as e:
-        return (job["id"], None, str(e))
+    """Analyze a single job with retries on 503. Returns (job_id, analysis_dict, error_msg)."""
+    client = _get_client()
+    prompt = PROMPT_TEMPLATE.format(
+        title=job["title"],
+        company=job["company"],
+        location=job["location"],
+        description=job["description"][:3000],
+    )
+    for attempt in range(MAX_RETRIES):
+        try:
+            response = client.models.generate_content(
+                model=MODEL,
+                contents=prompt,
+                config={
+                    "response_mime_type": "application/json",
+                    "response_schema": JobAnalysis,
+                },
+            )
+            result: JobAnalysis = response.parsed
+            return (job["id"], result.model_dump(), None)
+        except Exception as e:
+            if "503" in str(e) and attempt < MAX_RETRIES - 1:
+                time.sleep(2 ** attempt)
+                continue
+            return (job["id"], None, str(e))
 
 
 def analyze_jobs(jobs: list[dict]) -> list[tuple[str, dict]]:
@@ -88,8 +93,8 @@ def analyze_jobs(jobs: list[dict]) -> list[tuple[str, dict]]:
             if error:
                 log.error(f"[{i}/{len(jobs)}] Failed: {job['title']} @ {job['company']} — {error}")
             else:
-                status = "MATCH" if (analysis["is_relevant"] and analysis["is_remote"] and analysis["is_international"]) else "skip"
-                log.info(f"[{i}/{len(jobs)}] {status} | {job['title']} @ {job['company']} | remote={analysis['is_remote']} intl={analysis['is_international']} relevant={analysis['is_relevant']}")
+                status = "MATCH" if (analysis["is_relevant"] and analysis["is_international"]) else "skip"
+                log.info(f"[{i}/{len(jobs)}] {status} | {job['title']} @ {job['company']} | intl={analysis['is_international']} relevant={analysis['is_relevant']}")
                 results.append((job_id, analysis))
 
     return results

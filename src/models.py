@@ -6,7 +6,6 @@ class JobAnalysis(BaseModel):
     """Structured output schema for Gemini analysis."""
 
     is_relevant: bool = Field(description="Is this an AI/ML role? (ML Engineer, AI Engineer, MLOps, LLM, NLP, CV, Deep Learning, GenAI)")
-    is_remote: bool = Field(description="Is the position remote?")
     is_international: bool = Field(description="Can someone outside Brazil apply? Is it open to international candidates?")
     role_category: str = Field(description="One of: ML Engineer, AI Engineer, MLOps, LLM Engineer, NLP Engineer, CV Engineer, Data Scientist, Other")
     seniority: str = Field(description="One of: Junior, Mid, Senior, Lead")

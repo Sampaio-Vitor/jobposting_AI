@@ -92,11 +92,11 @@ def save_analysis(job_id: str, analysis: dict):
     with get_db() as conn:
         conn.execute(
             """UPDATE jobs SET
-                is_relevant = ?, is_remote = ?, is_international = ?,
+                is_relevant = ?, is_international = ?,
                 role_category = ?, seniority = ?, summary = ?, salary_range = ?,
                 analyzed_at = CURRENT_TIMESTAMP
                WHERE id = ?""",
-            (analysis["is_relevant"], analysis["is_remote"], analysis["is_international"],
+            (analysis["is_relevant"], analysis["is_international"],
              analysis["role_category"], analysis["seniority"], analysis["summary"],
              analysis.get("salary_range"), job_id),
         )
@@ -106,7 +106,7 @@ def get_unnotified_matches() -> list[dict]:
     with get_db() as conn:
         rows = conn.execute(
             """SELECT * FROM jobs
-               WHERE is_relevant = 1 AND is_remote = 1 AND is_international = 1
+               WHERE is_relevant = 1 AND is_international = 1
                  AND notified = 0"""
         ).fetchall()
         return [dict(row) for row in rows]
