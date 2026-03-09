@@ -2,6 +2,7 @@ import sqlite3
 import os
 from contextlib import contextmanager
 from src import config
+from src.company_filters import is_blocked_company
 
 
 def _ensure_dir():
@@ -85,7 +86,7 @@ def get_unanalyzed() -> list[dict]:
         rows = conn.execute(
             "SELECT id, title, company, location, link, description FROM jobs WHERE analyzed_at IS NULL"
         ).fetchall()
-        return [dict(row) for row in rows]
+        return [dict(row) for row in rows if not is_blocked_company(row["company"] or "")]
 
 
 def save_analysis(job_id: str, analysis: dict):
@@ -109,7 +110,7 @@ def get_unnotified_matches() -> list[dict]:
                WHERE is_relevant = 1 AND is_international = 1
                  AND notified = 0"""
         ).fetchall()
-        return [dict(row) for row in rows]
+        return [dict(row) for row in rows if not is_blocked_company(row["company"] or "")]
 
 
 def mark_notified(job_ids: list[str]):
