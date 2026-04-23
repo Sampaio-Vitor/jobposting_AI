@@ -2,7 +2,7 @@ import re
 
 
 BLOCKED_COMPANIES_RE = re.compile(
-    r"(bluelight|fullstack|get\W*offers|lumenalta|oowlish|georgiatek\W*systems|tata|agileengine|jobgether|crossover|thoughtworks|baires)",
+    r"(bluelight|fullstack|get\W*offers|lumenalta|oowlish|georgiatek\W*systems|tata|agileengine|jobgether|crossover|thoughtworks|baires|joveo|crossing\W*hurdles|nortal|epam|jobs\W*ai)",
     re.IGNORECASE,
 )
 
